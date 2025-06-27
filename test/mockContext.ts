@@ -8,10 +8,10 @@ import type {
 } from "@octokit/webhooks-types";
 
 const defaultInputs = {
-  triggerPhrase: "/claude",
+  triggerPhrase: "/gemini",
   assigneeTrigger: "",
   labelTrigger: "",
-  anthropicModel: "claude-3-7-sonnet-20250219",
+  anthropicModel: "gemini-3-7-sonnet-20250219",
   allowedTools: [] as string[],
   disallowedTools: [] as string[],
   customInstructions: "",
@@ -19,7 +19,7 @@ const defaultInputs = {
   useBedrock: false,
   useVertex: false,
   timeoutMinutes: 30,
-  branchPrefix: "claude/",
+  branchPrefix: "gemini/",
 };
 
 const defaultRepository = {
@@ -61,7 +61,7 @@ export const mockIssueOpenedContext: ParsedGitHubContext = {
     issue: {
       number: 42,
       title: "Bug: Application crashes on startup",
-      body: "## Description\n\nThe application crashes immediately after launching.\n\n## Steps to reproduce\n\n1. Install the app\n2. Launch it\n3. See crash\n\n/claude please help me fix this",
+      body: "## Description\n\nThe application crashes immediately after launching.\n\n## Steps to reproduce\n\n1. Install the app\n2. Launch it\n3. See crash\n\n/gemini please help me fix this",
       assignee: null,
       created_at: "2024-01-15T10:30:00Z",
       updated_at: "2024-01-15T10:30:00Z",
@@ -94,10 +94,10 @@ export const mockIssueAssignedContext: ParsedGitHubContext = {
   payload: {
     action: "assigned",
     assignee: {
-      login: "claude-bot",
+      login: "gemini-bot",
       id: 11111,
       avatar_url: "https://avatars.githubusercontent.com/u/11111",
-      html_url: "https://github.com/claude-bot",
+      html_url: "https://github.com/gemini-bot",
     },
     issue: {
       number: 123,
@@ -110,10 +110,10 @@ export const mockIssueAssignedContext: ParsedGitHubContext = {
         html_url: "https://github.com/jane-smith",
       },
       assignee: {
-        login: "claude-bot",
+        login: "gemini-bot",
         id: 11111,
         avatar_url: "https://avatars.githubusercontent.com/u/11111",
-        html_url: "https://github.com/claude-bot",
+        html_url: "https://github.com/gemini-bot",
       },
     },
     repository: {
@@ -127,7 +127,7 @@ export const mockIssueAssignedContext: ParsedGitHubContext = {
   } as IssuesEvent,
   entityNumber: 123,
   isPR: false,
-  inputs: { ...defaultInputs, assigneeTrigger: "@claude-bot" },
+  inputs: { ...defaultInputs, assigneeTrigger: "@gemini-bot" },
 };
 
 export const mockIssueLabeledContext: ParsedGitHubContext = {
@@ -152,7 +152,7 @@ export const mockIssueLabeledContext: ParsedGitHubContext = {
     },
     label: {
       id: 987654321,
-      name: "claude-task",
+      name: "gemini-task",
       color: "f29513",
       description: "Label for Claude AI interactions",
     },
@@ -167,7 +167,7 @@ export const mockIssueLabeledContext: ParsedGitHubContext = {
   } as IssuesEvent,
   entityNumber: 1234,
   isPR: false,
-  inputs: { ...defaultInputs, labelTrigger: "claude-task" },
+  inputs: { ...defaultInputs, labelTrigger: "gemini-task" },
 };
 
 // Issue comment on issue event
@@ -181,7 +181,7 @@ export const mockIssueCommentContext: ParsedGitHubContext = {
     action: "created",
     comment: {
       id: 12345678,
-      body: "@claude can you help explain how to configure the logging system?",
+      body: "@gemini can you help explain how to configure the logging system?",
       user: {
         login: "contributor-user",
         id: 88888,
@@ -204,7 +204,7 @@ export const mockIssueCommentContext: ParsedGitHubContext = {
   } as IssueCommentEvent,
   entityNumber: 55,
   isPR: false,
-  inputs: { ...defaultInputs, triggerPhrase: "@claude" },
+  inputs: { ...defaultInputs, triggerPhrase: "@gemini" },
 };
 
 export const mockPullRequestCommentContext: ParsedGitHubContext = {
@@ -234,7 +234,7 @@ export const mockPullRequestCommentContext: ParsedGitHubContext = {
     },
     comment: {
       id: 87654321,
-      body: "/claude please review the changes and ensure we're not introducing any new memory issues",
+      body: "/gemini please review the changes and ensure we're not introducing any new memory issues",
       user: {
         login: "reviewer-user",
         id: 66666,
@@ -272,7 +272,7 @@ export const mockPullRequestOpenedContext: ParsedGitHubContext = {
     pull_request: {
       number: 456,
       title: "Feature: Add user authentication",
-      body: "## Summary\n\nThis PR adds JWT-based authentication to the API.\n\n## Changes\n\n- Added auth middleware\n- Added login endpoint\n- Added JWT token generation\n\n/claude please review the security aspects",
+      body: "## Summary\n\nThis PR adds JWT-based authentication to the API.\n\n## Changes\n\n- Added auth middleware\n- Added login endpoint\n- Added JWT token generation\n\n/gemini please review the security aspects",
       user: {
         login: "feature-developer",
         id: 55555,
@@ -304,7 +304,7 @@ export const mockPullRequestReviewContext: ParsedGitHubContext = {
     action: "submitted",
     review: {
       id: 11122233,
-      body: "@claude can you check if the error handling is comprehensive enough in this PR?",
+      body: "@gemini can you check if the error handling is comprehensive enough in this PR?",
       user: {
         login: "senior-developer",
         id: 44444,
@@ -338,7 +338,7 @@ export const mockPullRequestReviewContext: ParsedGitHubContext = {
   } as PullRequestReviewEvent,
   entityNumber: 321,
   isPR: true,
-  inputs: { ...defaultInputs, triggerPhrase: "@claude" },
+  inputs: { ...defaultInputs, triggerPhrase: "@gemini" },
 };
 
 export const mockPullRequestReviewCommentContext: ParsedGitHubContext = {
@@ -351,7 +351,7 @@ export const mockPullRequestReviewCommentContext: ParsedGitHubContext = {
     action: "created",
     comment: {
       id: 99988877,
-      body: "/claude is this the most efficient way to implement this algorithm?",
+      body: "/gemini is this the most efficient way to implement this algorithm?",
       user: {
         login: "code-reviewer",
         id: 22222,

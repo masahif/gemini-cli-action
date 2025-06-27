@@ -1,0 +1,32 @@
+name: Gemini Auto Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  auto-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Automatic PR Review
+        uses: masahif/gemini-cli-action@development # Replace with your action's path
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          direct_prompt: |
+            Please review this pull request and provide comprehensive feedback.
+
+            Focus on:
+            - Code quality and best practices
+            - Potential bugs or issues
+            - Performance considerations
+            - Security implications
+            - Test coverage
+            - Documentation updates if needed
+
+            Provide constructive feedback with specific suggestions for improvement.

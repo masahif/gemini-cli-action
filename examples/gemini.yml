@@ -1,0 +1,27 @@
+name: Gemini Assistant
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned, labeled]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  gemini-cli-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Gemini CLI Action
+        uses: masahif/gemini-cli-action@development # Replace with your action's path
+        with:
+          trigger_phrase: "@gemini"
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

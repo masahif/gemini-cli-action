@@ -6,6 +6,8 @@
  */
 
 import * as core from "@actions/core";
+import { mkdir, writeFile } from "fs/promises";
+import { join } from "path";
 import { setupGitHubToken } from "../github/token";
 import { checkTriggerAction } from "../github/validation/trigger";
 import { checkHumanActor } from "../github/validation/actor";
@@ -41,6 +43,7 @@ async function run() {
 
     // Step 4: Check trigger conditions
     const containsTrigger = await checkTriggerAction(context);
+    core.setOutput("contains_trigger", containsTrigger.toString());
 
     if (!containsTrigger) {
       console.log("No trigger found, skipping remaining steps");
@@ -52,6 +55,8 @@ async function run() {
 
     // Step 6: Create initial tracking comment
     const commentId = await createInitialComment(octokit.rest, context);
+    core.setOutput("gemini_comment_id", commentId.toString());
+
 
     // Step 7: Fetch GitHub data (once for both branch setup and prompt creation)
     const githubData = await fetchGitHubData({
@@ -64,6 +69,9 @@ async function run() {
 
     // Step 8: Setup branch
     const branchInfo = await setupBranch(octokit, githubData, context);
+    core.setOutput("GEMINI_BRANCH", branchInfo.claudeBranch);
+    core.setOutput("BASE_BRANCH", branchInfo.baseBranch);
+
 
     // Step 9: Update initial comment with branch link (only for issues that created a new branch)
     if (branchInfo.claudeBranch) {
@@ -84,9 +92,9 @@ async function run() {
       context,
     );
 
-    // Step 11: Get MCP configuration
+    // Step 11: Get MCP configuration and write to settings file
     const additionalMcpConfig = process.env.MCP_CONFIG || "";
-    const mcpConfig = await prepareMcpConfig({
+    const mcpConfigString = await prepareMcpConfig({
       githubToken,
       owner: context.repository.owner,
       repo: context.repository.repo,
@@ -95,7 +103,15 @@ async function run() {
       claudeCommentId: commentId.toString(),
       allowedTools: context.inputs.allowedTools,
     });
-    core.setOutput("mcp_config", mcpConfig);
+    
+    const geminiSettingsDir = join(process.env.GITHUB_WORKSPACE || process.cwd(), ".gemini");
+    await mkdir(geminiSettingsDir, { recursive: true });
+    await writeFile(
+      join(geminiSettingsDir, "settings.json"),
+      mcpConfigString,
+    );
+    console.log("MCP settings file created at .gemini/settings.json");
+
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     core.setFailed(`Prepare step failed with error: ${errorMessage}`);

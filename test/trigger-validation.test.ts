@@ -28,14 +28,14 @@ describe("checkContainsTrigger", () => {
         eventName: "issues",
         eventAction: "opened",
         inputs: {
-          triggerPhrase: "/claude",
+          triggerPhrase: "/gemini",
           assigneeTrigger: "",
           labelTrigger: "",
           directPrompt: "Fix the bug in the login form",
           allowedTools: [],
           disallowedTools: [],
           customInstructions: "",
-          branchPrefix: "claude/",
+          branchPrefix: "gemini/",
         },
       });
       expect(checkContainsTrigger(context)).toBe(true);
@@ -56,14 +56,14 @@ describe("checkContainsTrigger", () => {
           },
         } as IssuesEvent,
         inputs: {
-          triggerPhrase: "/claude",
+          triggerPhrase: "/gemini",
           assigneeTrigger: "",
           labelTrigger: "",
           directPrompt: "",
           allowedTools: [],
           disallowedTools: [],
           customInstructions: "",
-          branchPrefix: "claude/",
+          branchPrefix: "gemini/",
         },
       });
       expect(checkContainsTrigger(context)).toBe(false);
@@ -81,7 +81,7 @@ describe("checkContainsTrigger", () => {
         ...mockIssueAssignedContext,
         inputs: {
           ...mockIssueAssignedContext.inputs,
-          assigneeTrigger: "claude-bot",
+          assigneeTrigger: "gemini-bot",
         },
       };
       expect(checkContainsTrigger(context)).toBe(true);
@@ -158,7 +158,7 @@ describe("checkContainsTrigger", () => {
           ...mockIssueOpenedContext.payload,
           issue: {
             ...(mockIssueOpenedContext.payload as IssuesEvent).issue,
-            title: "/claude Fix the login bug",
+            title: "/gemini Fix the login bug",
             body: "The login page is broken",
           },
         },
@@ -171,21 +171,21 @@ describe("checkContainsTrigger", () => {
         ...mockIssueOpenedContext,
         inputs: {
           ...mockIssueOpenedContext.inputs,
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
         },
       };
 
       // Test various punctuation marks
       const testCases = [
-        { issueBody: "@claude, can you help?", expected: true },
-        { issueBody: "@claude. Please look at this", expected: true },
-        { issueBody: "@claude! This is urgent", expected: true },
-        { issueBody: "@claude? What do you think?", expected: true },
-        { issueBody: "@claude: here's the issue", expected: true },
-        { issueBody: "@claude; and another thing", expected: true },
-        { issueBody: "Hey @claude, can you help?", expected: true },
-        { issueBody: "claudette contains claude", expected: false },
-        { issueBody: "email@claude.com", expected: false },
+        { issueBody: "@gemini, can you help?", expected: true },
+        { issueBody: "@gemini. Please look at this", expected: true },
+        { issueBody: "@gemini! This is urgent", expected: true },
+        { issueBody: "@gemini? What do you think?", expected: true },
+        { issueBody: "@gemini: here's the issue", expected: true },
+        { issueBody: "@gemini; and another thing", expected: true },
+        { issueBody: "Hey @gemini, can you help?", expected: true },
+        { issueBody: "geminitte contains gemini", expected: false },
+        { issueBody: "email@gemini.com", expected: false },
       ];
 
       testCases.forEach(({ issueBody, expected }) => {
@@ -210,7 +210,7 @@ describe("checkContainsTrigger", () => {
           ...mockIssueOpenedContext.payload,
           issue: {
             ...(mockIssueOpenedContext.payload as IssuesEvent).issue,
-            body: "claudette helped me with this",
+            body: "geminitte helped me with this",
           },
         },
       } as ParsedGitHubContext;
@@ -222,16 +222,16 @@ describe("checkContainsTrigger", () => {
         ...mockIssueOpenedContext,
         inputs: {
           ...mockIssueOpenedContext.inputs,
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
         },
       };
 
       const testCases = [
-        { issueTitle: "@claude, can you help?", expected: true },
-        { issueTitle: "@claude: Fix this bug", expected: true },
-        { issueTitle: "Bug: @claude please review", expected: true },
-        { issueTitle: "email@claude.com issue", expected: false },
-        { issueTitle: "claudette needs help", expected: false },
+        { issueTitle: "@gemini, can you help?", expected: true },
+        { issueTitle: "@gemini: Fix this bug", expected: true },
+        { issueTitle: "Bug: @gemini please review", expected: true },
+        { issueTitle: "email@gemini.com issue", expected: false },
+        { issueTitle: "geminitte needs help", expected: false },
       ];
 
       testCases.forEach(({ issueTitle, expected }) => {
@@ -262,20 +262,20 @@ describe("checkContainsTrigger", () => {
           pull_request: {
             number: 123,
             title: "Test PR",
-            body: "@claude can you review this?",
+            body: "@gemini can you review this?",
             created_at: "2023-01-01T00:00:00Z",
             user: { login: "testuser" },
           },
         } as PullRequestEvent,
         inputs: {
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
           assigneeTrigger: "",
           labelTrigger: "",
           directPrompt: "",
           allowedTools: [],
           disallowedTools: [],
           customInstructions: "",
-          branchPrefix: "claude/",
+          branchPrefix: "gemini/",
         },
       });
       expect(checkContainsTrigger(context)).toBe(true);
@@ -290,21 +290,21 @@ describe("checkContainsTrigger", () => {
           action: "opened",
           pull_request: {
             number: 123,
-            title: "@claude Review this PR",
+            title: "@gemini Review this PR",
             body: "This PR fixes a bug",
             created_at: "2023-01-01T00:00:00Z",
             user: { login: "testuser" },
           },
         } as PullRequestEvent,
         inputs: {
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
           assigneeTrigger: "",
           labelTrigger: "",
           directPrompt: "",
           allowedTools: [],
           disallowedTools: [],
           customInstructions: "",
-          branchPrefix: "claude/",
+          branchPrefix: "gemini/",
         },
       });
       expect(checkContainsTrigger(context)).toBe(true);
@@ -326,14 +326,14 @@ describe("checkContainsTrigger", () => {
           },
         } as PullRequestEvent,
         inputs: {
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
           assigneeTrigger: "",
           labelTrigger: "",
           directPrompt: "",
           allowedTools: [],
           disallowedTools: [],
           customInstructions: "",
-          branchPrefix: "claude/",
+          branchPrefix: "gemini/",
         },
       });
       expect(checkContainsTrigger(context)).toBe(false);
@@ -378,7 +378,7 @@ describe("checkContainsTrigger", () => {
           review: {
             ...(mockPullRequestReviewContext.payload as PullRequestReviewEvent)
               .review,
-            body: "/claude please review this PR",
+            body: "/gemini please review this PR",
           },
         },
       } as ParsedGitHubContext;
@@ -390,16 +390,16 @@ describe("checkContainsTrigger", () => {
         ...mockPullRequestReviewContext,
         inputs: {
           ...mockPullRequestReviewContext.inputs,
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
         },
       };
 
       const testCases = [
-        { commentBody: "@claude, please review", expected: true },
-        { commentBody: "@claude. fix this", expected: true },
-        { commentBody: "@claude!", expected: true },
-        { commentBody: "claude@example.com", expected: false },
-        { commentBody: "claudette", expected: false },
+        { commentBody: "@gemini, please review", expected: true },
+        { commentBody: "@gemini. fix this", expected: true },
+        { commentBody: "@gemini!", expected: true },
+        { commentBody: "gemini@example.com", expected: false },
+        { commentBody: "geminitte", expected: false },
       ];
 
       testCases.forEach(({ commentBody, expected }) => {
@@ -422,16 +422,16 @@ describe("checkContainsTrigger", () => {
         ...mockIssueCommentContext,
         inputs: {
           ...mockIssueCommentContext.inputs,
-          triggerPhrase: "@claude",
+          triggerPhrase: "@gemini",
         },
       };
 
       const testCases = [
-        { commentBody: "@claude, please review", expected: true },
-        { commentBody: "@claude. fix this", expected: true },
-        { commentBody: "@claude!", expected: true },
-        { commentBody: "claude@example.com", expected: false },
-        { commentBody: "claudette", expected: false },
+        { commentBody: "@gemini, please review", expected: true },
+        { commentBody: "@gemini. fix this", expected: true },
+        { commentBody: "@gemini!", expected: true },
+        { commentBody: "gemini@example.com", expected: false },
+        { commentBody: "geminitte", expected: false },
       ];
 
       testCases.forEach(({ commentBody, expected }) => {
