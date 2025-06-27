@@ -15,7 +15,7 @@ import {
   isPullRequestReviewCommentEvent,
   type ParsedGitHubContext,
 } from "../../context";
-import { updateClaudeComment } from "./update-claude-comment";
+import { updateGeminiComment } from "./update-gemini-comment";
 
 export async function updateTrackingComment(
   octokit: Octokits,
