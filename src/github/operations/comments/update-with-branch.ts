@@ -39,7 +39,7 @@ export async function updateTrackingComment(
   try {
     const isPRReviewComment = isPullRequestReviewCommentEvent(context);
 
-    await updateClaudeComment(octokit.rest, {
+    await updateGeminiComment(octokit.rest, {
       owner,
       repo,
       commentId,
