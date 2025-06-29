@@ -109,7 +109,7 @@ runs:
       if: steps.prepare.outputs.contains_trigger == 'true'
       shell: bash
       run: |
-        timeout 60 cat ${{ runner.temp }}/gemini-prompts/gemini-prompt.txt | gemini --model ${{ inputs.model }} --yolo | grep -v "MCP" > ${{ runner.temp }}/gemini-output.json
+        cat ${{ runner.temp }}/gemini-prompts/gemini-prompt.txt | gemini --model ${{ inputs.model }} --yolo | grep -v "MCP" > ${{ runner.temp }}/gemini-output.json
         echo "execution_file=${{ runner.temp }}/gemini-output.json" >> $GITHUB_OUTPUT
       env:
         GEMINI_API_KEY: ${{ inputs.gemini_api_key }}
