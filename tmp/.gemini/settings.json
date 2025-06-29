@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "github_file_ops": {
+      "command": "bun",
+      "args": [
+        "/Users/mfukuda/Workspace/gemini/gemini-cli-action/tmp/mcp-build/github-file-ops-server.js"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${env.GITHUB_TOKEN}",
+        "REPO_OWNER": "local-test",
+        "REPO_NAME": "local-repo",
+        "BRANCH_NAME": "local-branch",
+        "REPO_DIR": "/Users/mfukuda/Workspace/gemini/gemini-cli-action/tmp",
+        "GEMINI_COMMENT_ID": "12345",
+        "GITHUB_EVENT_NAME": "issue_comment",
+        "IS_PR": "false",
+        "GITHUB_API_URL": "https://api.github.com"
+      }
+    }
+  }
+}

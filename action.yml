@@ -79,6 +79,12 @@ runs:
       shell: bash
       run: npm install -g @google/gemini-cli
 
+    - name: Build MCP Server
+      shell: bash
+      run: |
+        cd ${GITHUB_ACTION_PATH}
+        bun build ./src/mcp/github-file-ops-server.ts --outdir ./dist --target=node
+
     - name: Prepare action
       id: prepare
       shell: bash

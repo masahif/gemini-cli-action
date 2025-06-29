@@ -35,8 +35,7 @@ export async function prepareMcpConfig(
         github_file_ops: {
           command: "bun",
           args: [
-            "run",
-            `${process.env.GITHUB_ACTION_PATH}/src/mcp/github-file-ops-server.ts`,
+            `${process.env.GITHUB_ACTION_PATH}/dist/github-file-ops-server.js`,
           ],
           env: {
             GITHUB_TOKEN: githubToken,
