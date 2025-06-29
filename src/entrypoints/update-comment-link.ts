@@ -101,7 +101,7 @@ async function run() {
     // If geminiBranch is set, it means we created a new branch (for issues or closed/merged PRs)
     if (geminiBranch && !shouldDeleteBranch) {
       // Check if comment already contains a PR URL
-      const serverUrlPattern = serverUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\import { updateClaudeComment } from "../github/operations/comments/update-claude-comment";
+      const serverUrlPattern = serverUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\import { updateGeminiComment } from "../github/operations/comments/update-gemini-comment";
 
 async function run() {
   try {
@@ -295,7 +295,7 @@ async function run() {
     const updatedBody = updateCommentBody(commentInput);
 
     try {
-      await updateClaudeComment(octokit.rest, {
+      await updateGeminiComment(octokit.rest, {
         owner,
         repo,
         commentId,
@@ -313,7 +313,7 @@ async function run() {
       throw updateError;
     }");
       const prUrlPattern = new RegExp(
-        `${serverUrlPattern}\\/.+\\/compare\\/${baseBranch.replace(/[.*+?^${}()|[\]\\]/g, "\\import { updateClaudeComment } from "../github/operations/comments/update-claude-comment";
+        `${serverUrlPattern}\\/.+\\/compare\\/${baseBranch.replace(/[.*+?^${}()|[\]\\]/g, "\\import { updateGeminiComment } from "../github/operations/comments/update-gemini-comment";
 
 async function run() {
   try {
@@ -507,7 +507,7 @@ async function run() {
     const updatedBody = updateCommentBody(commentInput);
 
     try {
-      await updateClaudeComment(octokit.rest, {
+      await updateGeminiComment(octokit.rest, {
         owner,
         repo,
         commentId,
