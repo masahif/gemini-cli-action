@@ -109,6 +109,7 @@ runs:
       if: steps.prepare.outputs.contains_trigger == 'true'
       shell: bash
       run: |
+        set -x
         cat ${{ runner.temp }}/gemini-prompts/gemini-prompt.txt | gemini --model ${{ inputs.model }} --yolo > ${{ runner.temp }}/gemini-output.json
         echo "execution_file=${{ runner.temp }}/gemini-output.json" >> $GITHUB_OUTPUT
       env:
