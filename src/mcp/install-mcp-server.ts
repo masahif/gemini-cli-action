@@ -33,7 +33,7 @@ export async function prepareMcpConfig(
     const baseMcpConfig: { mcpServers: Record<string, unknown> } = {
       mcpServers: {
         github_file_ops: {
-          command: "bun",
+          command: "node",
           args: [
             `${process.env.GITHUB_ACTION_PATH}/dist/github-file-ops-server.js`,
           ],
